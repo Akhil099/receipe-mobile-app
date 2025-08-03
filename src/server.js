@@ -3,9 +3,12 @@ import { ENV } from "./config/env.js";
 import { db } from "./config/db.js";
 import { favoritesTable } from "./db/schema.js";
 import { and, eq } from "drizzle-orm";
+import job from "./config/cron.js";
 
 const app = express()
 const PORT = ENV.PORT;
+
+if (ENV.NODE_ENV === "production") job.start();
 
 app.use(express.json()); //this enables the server to have a body parser middleware which enables 
 //the server to parse JSON in the body of incoming requests and makes it available as req.body
